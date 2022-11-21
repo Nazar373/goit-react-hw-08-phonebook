@@ -22,12 +22,14 @@ export const contactsSlice = createSlice({
             id: nanoid(),
             name,
             number,
-          }
-        }
+          },
+        };
       },
-    deleteContact(state, action) {
-      return state.filter(contact => contact.id !== action.payload)
-      }
+    },
+    deleteContact: {
+      reducer(state, action) {
+        return state.filter(contact => contact.id !== action.payload);
+      },
     },
   },
 });

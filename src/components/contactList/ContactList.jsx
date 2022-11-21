@@ -7,14 +7,11 @@ import { Item, List } from './ContactList.styled';
 const ContactList = () => {
   const dispatch = useDispatch();
   const contacts = useSelector(getContacts);
-  console.log(contacts);
   const filter = useSelector(getFilter);
-
-  console.log('filter', filter);
   const contactList = contacts.filter(contact =>
     contact.name.toLowerCase().includes(filter)
   );
-  console.log('islist', contactList);
+  
   return (
     <List>
       {contactList.map(contact => (
