@@ -13,7 +13,6 @@ const Filter = () => {
   Find contacts by name
     <Input
       type="text"
-      // value={value}
       onChange={onChangeFilter}
     ></Input>
   </Label>;
