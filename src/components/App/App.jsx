@@ -1,27 +1,25 @@
 import React, { useEffect } from 'react';
-import ContactForm from '../contactForm/ContactForm';
+// import ContactForm from '../contactForm/ContactForm';
 import ContactList from '../contactList/ContactList';
-import Filter from '../filter/Filter';
+// import Filter from '../filter/Filter';
 import { Container, Title, SecondTitle } from './App.styled';
-import { useSelector } from 'react-redux';
-import { getContacts } from '../../redux/selectors';
+import { useDispatch } from 'react-redux';
+import { fetchContacts } from '../../redux/operations';
 
 export function App() {
-  const contacts = useSelector(getContacts)
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    localStorage.setItem('contacts', JSON.stringify(contacts));
-  }, [contacts]);
+    dispatch(fetchContacts());
+  }, [dispatch]);
 
   return (
     <Container>
       <Title>Phonebook</Title>
-      <ContactForm />
+      {/* <ContactForm /> */}
       <SecondTitle>Contacts</SecondTitle>
-      <Filter
-      />
-      <ContactList
-      />
+      {/* <Filter /> */}
+      <ContactList />
     </Container>
   );
 }
