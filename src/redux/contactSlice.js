@@ -3,10 +3,9 @@ import { addContacts, deleteContacts, fetchContacts } from './operations';
 
 const extraActions = [fetchContacts, addContacts, deleteContacts];
 
-const getActions = type => isAnyOf(...extraActions.map(action => action[type]));
+const getActions = type => extraActions.map(action => action[type]);
 
 const fetchContactsSucceesReducer = (state, action) => {
-  console.log('fetch-fulfilled', state);
   state.items = action.payload;
 };
 
@@ -15,15 +14,19 @@ const addContactSuccessReducer = (state, action) => {
 };
 
 const deleteContactSuccessReducer = (state, action) => {
-  state.items.filter(contact => contact.id !== action.payload);
+  const index = state.items.findIndex(
+    contact => contact.id === action.payload.id
+  );
+  state.items.splice(index, 1);
 };
 
-const pendingReducer = state => (state.isLoading = true);
+const pendingReducer = state => {
+  state.isLoading = true;
+};
 
 const rejectedReducer = (state, action) => {
   state.isLoading = false;
   state.error = action.payload;
-  console.log('rejectedState', state);
 };
 
 const fulfilledReducer = state => {
@@ -38,14 +41,15 @@ const contactsSlice = createSlice({
     isLoading: false,
     error: null,
   },
-  extraReducers: builder =>
+  extraReducers: builder => {
     builder
       .addCase(fetchContacts.fulfilled, fetchContactsSucceesReducer)
       .addCase(addContacts.fulfilled, addContactSuccessReducer)
       .addCase(deleteContacts.fulfilled, deleteContactSuccessReducer)
-      .addMatcher(getActions('pending'), pendingReducer)
-      .addMatcher(getActions('rejected'), rejectedReducer)
-      .addMatcher(getActions('fulfilled'), fulfilledReducer),
+      .addMatcher(isAnyOf(...getActions('pending')), pendingReducer)
+      .addMatcher(isAnyOf(...getActions('rejected')), rejectedReducer)
+      .addMatcher(isAnyOf(...getActions('fulfilled')), fulfilledReducer);
+  }
 });
 
 export const contactsReducer = contactsSlice.reducer;
