@@ -12,19 +12,23 @@ const initialFormState = {
 const formReducer = (state, action) => {
   switch (action.type) {
     case 'input text':
-      console.log('actionInCase', action);
       return {
         ...state,
         [action.field]: action.payload,
       };
+      case 'clear text':
+        return {
+          name: '',
+          phone: '',
+        }
     default:
       return state;
   }
 };
 export default function ContactForm() {
-  const disp = useDispatch();
+  const dispatch = useDispatch();
   const contacts = useSelector(selectContacts);
-  const [formState, dispatch] = useReducer(formReducer, initialFormState);
+  const [formState, setFormState] = useReducer(formReducer, initialFormState);
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -35,11 +39,16 @@ export default function ContactForm() {
       alert(`${formState.phone} is already in contacts.`);
       return;
     }
-    disp(addContacts(formState));
+    dispatch(addContacts(formState));
+    setFormState({
+      type: "clear text",
+      name: '',
+      phone: '',
+    })
   };
 
   const handleTextChange = (e) => {
-    dispatch({
+    setFormState({
       type: "input text",
       field: e.target.name,
       payload: e.target.value
