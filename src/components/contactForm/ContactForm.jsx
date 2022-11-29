@@ -1,37 +1,57 @@
-import React, { useState } from 'react';
+import React, { useReducer } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectContacts } from '../../redux/selectors';
 import { addContacts } from '../../redux/operations';
 import { Form, Label, Input } from './ContactForm.styled';
-export default function ContactForm() {
-  const dispatch = useDispatch();
-  const contacts = useSelector(selectContacts);
 
-  const [name, setName] = useState('');
-  const [phone, setPhone] = useState('');
+const initialFormState = {
+  name: '',
+  phone: '',
+};
+
+const formReducer = (state, action) => {
+  switch (action.type) {
+    case 'input text':
+      console.log('actionInCase', action);
+      return {
+        ...state,
+        [action.field]: action.payload,
+      };
+    default:
+      return state;
+  }
+};
+export default function ContactForm() {
+  const disp = useDispatch();
+  const contacts = useSelector(selectContacts);
+  const [formState, dispatch] = useReducer(formReducer, initialFormState);
 
   const handleSubmit = e => {
     e.preventDefault();
-
-    if (contacts.find(contact => contact.name === name)) {
+    if (contacts.find(contact => contact.name === formState.name)) {
       alert('a contact with this name is already registered');
       return;
-    } else if (contacts.find(contact => contact.phone === phone)) {
-      alert(`${phone} is already in contacts.`);
+    } else if (contacts.find(contact => contact.phone === formState.phone)) {
+      alert(`${formState.phone} is already in contacts.`);
       return;
     }
-    dispatch(addContacts({ name, phone }));
-    setName("");
-    setPhone("");
+    disp(addContacts(formState));
   };
 
+  const handleTextChange = (e) => {
+    dispatch({
+      type: "input text",
+      field: e.target.name,
+      payload: e.target.value
+    })
+  }
   return (
     <Form onSubmit={handleSubmit}>
       <Label>
         Name
         <Input
-          onChange={e => setName(e.target.value)}
-          value={name}
+          onChange={(e) => handleTextChange(e)}
+          value={formState.name}
           type="text"
           name="name"
           pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
@@ -42,8 +62,8 @@ export default function ContactForm() {
       <Label>
         Number
         <Input
-          onChange={e => setPhone(e.target.value)}
-          value={phone}
+          onChange={(e) => handleTextChange(e)}
+          value={formState.phone}
           type="tel"
           name="phone"
           pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
