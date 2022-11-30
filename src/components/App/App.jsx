@@ -10,7 +10,9 @@ import { selectError, selectIsLoading } from '../../redux/selectors';
 import { Route, Routes } from 'react-router-dom';
 import { Layout } from '../Layout/Layout';
 
-const Contacts = lazy(() => import('../../pages/Contacts/Contacts'))
+const Contacts = lazy(() => import('../../pages/Contacts/Contacts'));
+const Register = lazy(() => import('../../pages/Register/Register'));
+const Login = lazy(() => import('../../pages/Login/Login'));
 
 export function App() {
   const dispatch = useDispatch();
@@ -25,15 +27,17 @@ export function App() {
     <Container>
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route path='/register' element={<Contacts />}/>
+          <Route index element={<Contacts />}/>
+          <Route path='/register' element={<Register />}/>
+          <Route path='/login' element ={<Login />}/>
         </Route>
       </Routes>
-      <Title>Phonebook</Title>
+      {/* <Title>Phonebook</Title>
       <ContactForm />
       <SecondTitle>Contacts</SecondTitle>
       <Filter />
       {isLoading && !error && <b>Request in progress...</b>}
-      <ContactList /> 
+      <ContactList />  */}
     </Container>
   );
 }
