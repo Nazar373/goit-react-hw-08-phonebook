@@ -8,8 +8,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchContacts } from '../../redux/operations';
 import { selectError, selectIsLoading } from '../../redux/selectors';
 import { Route, Routes } from 'react-router-dom';
+import { Layout } from '../Layout/Layout';
 
-const Layout = lazy(() => import('../Layout/Layout'))
+const Contacts = lazy(() => import('../../pages/Contacts/Contacts'))
 
 export function App() {
   const dispatch = useDispatch();
@@ -23,7 +24,9 @@ export function App() {
   return (
     <Container>
       <Routes>
-        <Route path="/" element={<Layout />}/>
+        <Route path="/" element={<Layout />}>
+          <Route path='/register' element={<Contacts />}/>
+        </Route>
       </Routes>
       <Title>Phonebook</Title>
       <ContactForm />
