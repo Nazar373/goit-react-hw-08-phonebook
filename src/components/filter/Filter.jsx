@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { setFilterState } from '../../redux/contacts/filterSlice';
 
-import TextField from '@mui/material/TextField';
+import {TextField, Box} from '@mui/material';
 
 
 
@@ -18,11 +18,16 @@ const Filter = () => {
     //   <Input
     //    type="text" onChange={onChangeFilter}></Input>
     // </Label>
+    <Box
+        sx={{
+          marginTop: 8,
+        }}
+      >
     <TextField
       id="outlined-name"
       label="Find contacts by name"
       onChange={onChangeFilter}
-    />
+    /></Box>
   );
 };
 

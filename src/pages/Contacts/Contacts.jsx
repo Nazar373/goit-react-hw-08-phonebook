@@ -5,6 +5,7 @@ import { selectIsLoading, selectError } from '../../redux/contacts/selectors';
 import ContactList from '../../components/ContactList/ContactList';
 import { fetchContacts } from '../../redux/contacts/operations';
 import Filter from '../../components/Filter/Filter';
+import { Container, CssBaseline, Box } from '@mui/material';
 
 const Contacts = () => {
   const dispatch = useDispatch();
@@ -19,11 +20,29 @@ const Contacts = () => {
       {/* <Helmet>
         <title>Contacts</title>
       </Helmet> */}
-      <ContactForm />
+      <Container maxWidth="xs">
+      <CssBaseline />
+      <Box
+        sx={{
+          marginTop: 8,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+        }}
+      >
+        <ContactForm />
+      <Filter />
+      {isLoading && !error && <b>Request in progress...</b>}
+      <h2>Contacts</h2>
+      <ContactList />
+      </Box>
+      </Container>
+      {/* <ContactForm />
       <h2>Contacts</h2>
       <Filter />
       {isLoading && !error && <b>Request in progress...</b>}
-      <ContactList />
+      <ContactList /> */}
+      
     </>
   );
 };

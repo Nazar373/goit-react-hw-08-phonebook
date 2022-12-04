@@ -4,10 +4,7 @@ import { selectContacts } from '../../redux/contacts/selectors';
 import { addContacts } from '../../redux/contacts/operations';
 // import { Form, Label, Input } from './ContactForm.styled';
 
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
+import { Container, Box, TextField, Button } from '@mui/material';
 
 const initialFormState = {
   name: '',
@@ -60,10 +57,7 @@ const ContactForm = () => {
     });
   };
   return (
-    <>
-      <Typography component="h1" variant="h5">
-        Add contact
-      </Typography>
+    <Container maxWidth="xs">
       <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
         <TextField
           onChange={e => handleTextChange(e)}
@@ -96,7 +90,7 @@ const ContactForm = () => {
           Add contact
         </Button>
       </Box>
-      </>
+    </Container>
   );
 };
 
