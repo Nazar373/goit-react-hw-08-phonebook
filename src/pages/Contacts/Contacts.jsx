@@ -37,12 +37,6 @@ const Contacts = () => {
       <ContactList />
       </Box>
       </Container>
-      {/* <ContactForm />
-      <h2>Contacts</h2>
-      <Filter />
-      {isLoading && !error && <b>Request in progress...</b>}
-      <ContactList /> */}
-      
     </>
   );
 };
