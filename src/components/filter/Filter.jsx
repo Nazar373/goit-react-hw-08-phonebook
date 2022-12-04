@@ -4,7 +4,7 @@ import { setFilterState } from '../../redux/contacts/filterSlice';
 
 import { TextField, Box } from '@mui/material';
 
- const Filter = () => {
+const Filter = () => {
   const dispatch = useDispatch();
   const onChangeFilter = e => {
     return dispatch(setFilterState(e.currentTarget.value));
@@ -25,4 +25,4 @@ import { TextField, Box } from '@mui/material';
   );
 };
 
-export default Filter
+export default Filter;
