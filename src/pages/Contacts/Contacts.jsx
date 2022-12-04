@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { selectIsLoading, selectError } from '../../redux/contacts/selectors';
 import ContactList from '../../components/ContactList/ContactList';
 import { fetchContacts } from '../../redux/contacts/operations';
-import Filter from '../../components/Filter1/Filter';
+import Filter from '../../components/Filter/Filter';
 import { Container, CssBaseline, Box } from '@mui/material';
 
 const Contacts = () => {
