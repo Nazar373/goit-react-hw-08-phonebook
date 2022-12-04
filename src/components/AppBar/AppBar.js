@@ -50,7 +50,7 @@ export const AppBarComponent = () => {
               <MenuItem onClick={handleCloseNavMenu}>
                 <Typography textAlign="center">
                   <NavLink to="/" end>
-                  Home
+                    Home
                   </NavLink>
                 </Typography>
               </MenuItem>
@@ -69,7 +69,7 @@ export const AppBarComponent = () => {
               sx={{ my: 2, color: 'white', display: 'block' }}
             >
               <NavLink to="/" end>
-              Home
+                Home
               </NavLink>
             </Button>
             {isLoggedIn && (
