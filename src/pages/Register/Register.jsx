@@ -1,5 +1,13 @@
-export const Register = () => {
+import { RegisterForm } from '../../components/RegisterForm/RegisterForm';
+import React from 'react';
+// import { Helmet } from 'react-helmet-async';
+
+const Register = () => {
   return (
-    <h2>Register</h2>
+    <>
+    <RegisterForm />
+    </>
   )
-}
+};
+
+export default Register

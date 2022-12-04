@@ -1,8 +1,13 @@
 import React, { useReducer } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectContacts } from '../../redux/selectors';
-import { addContacts } from '../../redux/operations';
-import { Form, Label, Input } from './ContactForm.styled';
+import { selectContacts } from '../../redux/contacts/selectors';
+import { addContacts } from '../../redux/contacts/operations';
+// import { Form, Label, Input } from './ContactForm.styled';
+
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 
 const initialFormState = {
   name: '',
@@ -16,16 +21,16 @@ const formReducer = (state, action) => {
         ...state,
         [action.field]: action.payload,
       };
-      case 'clear text':
-        return {
-          name: '',
-          phone: '',
-        }
+    case 'clear text':
+      return {
+        name: '',
+        phone: '',
+      };
     default:
       return state;
   }
 };
-export default function ContactForm() {
+const ContactForm = () => {
   const dispatch = useDispatch();
   const contacts = useSelector(selectContacts);
   const [formState, setFormState] = useReducer(formReducer, initialFormState);
@@ -41,46 +46,58 @@ export default function ContactForm() {
     }
     dispatch(addContacts(formState));
     setFormState({
-      type: "clear text",
+      type: 'clear text',
       name: '',
       phone: '',
-    })
+    });
   };
 
-  const handleTextChange = (e) => {
+  const handleTextChange = e => {
     setFormState({
-      type: "input text",
+      type: 'input text',
       field: e.target.name,
-      payload: e.target.value
-    })
-  }
+      payload: e.target.value,
+    });
+  };
   return (
-    <Form onSubmit={handleSubmit}>
-      <Label>
-        Name
-        <Input
-          onChange={(e) => handleTextChange(e)}
-          value={formState.name}
-          type="text"
+    <>
+      <Typography component="h1" variant="h5">
+        Add contact
+      </Typography>
+      <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+        <TextField
+          onChange={e => handleTextChange(e)}
+          margin="normal"
+          required
+          fullWidth
+          id="name"
+          label="Name"
           name="name"
-          pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-          title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-          required
+          type="text"
+          autoFocus
         />
-      </Label>
-      <Label>
-        Number
-        <Input
-          onChange={(e) => handleTextChange(e)}
-          value={formState.phone}
-          type="tel"
+        <TextField
+          onChange={e => handleTextChange(e)}
+          margin="normal"
+          required
+          fullWidth
           name="phone"
-          pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
-          title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
-          required
+          label="Phone"
+          type="tel"
+          id="phone"
+          autoComplete="current-password"
         />
-      </Label>
-      <button type="submit">Add contact</button>
-    </Form>
+        <Button
+          type="submit"
+          fullWidth
+          variant="contained"
+          sx={{ mt: 3, mb: 2 }}
+        >
+          Add contact
+        </Button>
+      </Box>
+      </>
   );
-}
+};
+
+export default ContactForm;
